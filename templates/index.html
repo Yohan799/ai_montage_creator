@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎞️ AI Montage Creator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input[type="file"],
+    textarea {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 12px;
+      font-size: 16px;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #4338ca;
+    }
+
+    video {
+      margin-top: 20px;
+      border-radius: 10px;
+      width: 100%;
+    }
+
+    .download-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 15px;
+      background: #10b981;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .download-btn:hover {
+      background: #059669;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎬 AI Montage Creator</h1>
+
+    <form id="upload-form" action="/generate" method="POST" enctype="multipart/form-data">
+      <label for="images">Upload Images:</label>
+      <input type="file" name="images" multiple accept="image/*" required />
+
+      <label for="prompt">Describe the Mood or Prompt:</label>
+      <textarea name="prompt" rows="4" placeholder="e.g. Dreamy and nostalgic vacation in Goa" required></textarea>
+
+      <button type="submit">Generate Montage</button>
+    </form>
+
+    {% if video_url %}
+      <h2>Your Montage is Ready!</h2>
+      <video controls>
+        <source src="{{ url_for('static', filename=video_url) }}" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <br />
+      <a class="download-btn" href="{{ url_for('static', filename=video_url) }}" download>Download Video</a>
+    {% endif %}
+  </div>
+</body>
+</html>
